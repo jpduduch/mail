@@ -1,2 +1,4 @@
 .DS_Store
 mail/.DS_Store
+.venv
+db.sqlite3
