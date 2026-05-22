@@ -119,7 +119,7 @@ def email(request, email_id):
             email.archived = data["archived"]
         email.save()
         return HttpResponse(status=204)
-"""  """
+
     # Email must be via GET or PUT
     else:
         return JsonResponse({
