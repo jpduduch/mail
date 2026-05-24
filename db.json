@@ -1,2 +1,56 @@
 [
+{
+  "model": "mail.user",
+  "pk": 1,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$8btGfgyf1mqitKSeDpds1l$Xx0+FX68RjotsmFTaW1SsWpOqwwOp0ZYxhhmkCofCUQ=",
+    "last_login": "2026-05-24T14:15:42.833Z",
+    "is_superuser": false,
+    "username": "harry@hogwarts.com",
+    "first_name": "",
+    "last_name": "",
+    "email": "harry@hogwarts.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-05-24T14:15:42.384Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "mail.user",
+  "pk": 2,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$W9b0TfxaOdn56NN8TBDdWX$YEYVuMoTnYwMlYwObOe+Bck+cnpHjnPIJ6P3sczIADc=",
+    "last_login": "2026-05-24T14:16:27.496Z",
+    "is_superuser": false,
+    "username": "ron@hogwarts.com",
+    "first_name": "",
+    "last_name": "",
+    "email": "ron@hogwarts.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-05-24T14:16:27.043Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "mail.user",
+  "pk": 3,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$TUmTnpd9hvvk79uYr5OKev$0Lng7oZGlvKlwAXyL4otMN4EVCikD/Gp9l6SZrKItsU=",
+    "last_login": "2026-05-24T14:17:00.060Z",
+    "is_superuser": false,
+    "username": "hermione@hogwarts.com",
+    "first_name": "",
+    "last_name": "",
+    "email": "hermione@hogwarts.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-05-24T14:16:59.598Z",
+    "groups": [],
+    "user_permissions": []
+  }
+}
 ]
