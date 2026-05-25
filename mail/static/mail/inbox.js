@@ -122,7 +122,6 @@ function render_emails(emails) {
 }
 
 function render_email(email) {
-    console.log(email);
 
     // Clear inbox to clear memory usage
     document.querySelector('#emails-view').innerHTML = ''
