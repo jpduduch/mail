@@ -51,9 +51,14 @@ function send_mail(event) {
     })
     .then(response => response.json())
     .then(result => {
-        feedback_message("error" in result ? result.error : result.message);
+        if ("error" in result) {
+            feedback_message('#compose-view > h3', result.error);
+        } else {
+            clear();
+            load_mailbox('sent');
+            feedback_message('#emails-view > h3', result.message);
+        }
     })
-    clear();
 }
 
 function clear() {
@@ -63,12 +68,12 @@ function clear() {
     document.querySelector('#compose-body').value = '';
 }
 
-function feedback_message(message) {
+function feedback_message(destination, message) {
     // Create message component
     const msg = document.createElement('div');
     msg.classList.add('alert', 'alert-primary');
     msg.innerHTML = message;
-    document.querySelector('#compose-form').insertAdjacentElement('beforebegin', msg);
+    document.querySelector(destination).insertAdjacentElement('afterend', msg);
 
     // Destroy message after 6s.
     setInterval(() => {
