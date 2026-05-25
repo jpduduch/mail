@@ -61,6 +61,9 @@ function send_mail(event) {
     })
 }
 
+
+// Utils
+
 function clear() {
     // Clear out composition fields
     document.querySelector('#compose-recipients').value = '';
@@ -69,6 +72,7 @@ function clear() {
 }
 
 function feedback_message(destination, message) {
+
     // Create message component
     const msg = document.createElement('div');
     msg.classList.add('alert', 'alert-primary');
