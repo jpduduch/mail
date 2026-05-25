@@ -74,8 +74,6 @@ function render_emails(emails) {
 
     emails.forEach(email => {
 
-        console.log(email)
-
         const a = document.createElement('a');
         a.classList.add('list-group-item', 'list-group-item-action');
         a.setAttribute('href', '#');
