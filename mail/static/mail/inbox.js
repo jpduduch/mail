@@ -9,10 +9,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // By default, load the inbox
     load_mailbox('inbox');
 
-    // // Create message component
-    // const message = document.createElement('p');
-    // document.querySelector('#compose-form').insertAdjacentElement('beforebegin', message);
-
     // Submit trigger
     document.querySelector('#compose-form').addEventListener('submit', send_mail);
 });
@@ -22,11 +18,7 @@ function compose_email() {
     // Show compose view and hide other views
     document.querySelector('#emails-view').style.display = 'none';
     document.querySelector('#compose-view').style.display = 'block';
-
-    // Clear out composition fields
-    document.querySelector('#compose-recipients').value = '';
-    document.querySelector('#compose-subject').value = '';
-    document.querySelector('#compose-body').value = '';
+    clear();
 }
 
 function load_mailbox(mailbox) {
@@ -59,7 +51,28 @@ function send_mail(event) {
     })
     .then(response => response.json())
     .then(result => {
-        console.log(result);
-        message.innerHTML = result;
+        feedback_message("error" in result ? result.error : result.message);
     })
+    clear();
+}
+
+function clear() {
+    // Clear out composition fields
+    document.querySelector('#compose-recipients').value = '';
+    document.querySelector('#compose-subject').value = '';
+    document.querySelector('#compose-body').value = '';
+}
+
+function feedback_message(message) {
+    // Create message component
+    const msg = document.createElement('div');
+    msg.classList.add('alert', 'alert-primary');
+    msg.innerHTML = message;
+    document.querySelector('#compose-form').insertAdjacentElement('beforebegin', msg);
+
+    // Destroy message after 6s.
+    setInterval(() => {
+        msg.remove();
+    }, 6000);
+
 }
