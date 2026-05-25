@@ -4,7 +4,7 @@
   "pk": 1,
   "fields": {
     "password": "pbkdf2_sha256$1200000$8btGfgyf1mqitKSeDpds1l$Xx0+FX68RjotsmFTaW1SsWpOqwwOp0ZYxhhmkCofCUQ=",
-    "last_login": "2026-05-24T14:15:42.833Z",
+    "last_login": "2026-05-25T14:00:40.284Z",
     "is_superuser": false,
     "username": "harry@hogwarts.com",
     "first_name": "",
@@ -22,7 +22,7 @@
   "pk": 2,
   "fields": {
     "password": "pbkdf2_sha256$1200000$W9b0TfxaOdn56NN8TBDdWX$YEYVuMoTnYwMlYwObOe+Bck+cnpHjnPIJ6P3sczIADc=",
-    "last_login": "2026-05-24T14:16:27.496Z",
+    "last_login": "2026-05-25T13:39:50.172Z",
     "is_superuser": false,
     "username": "ron@hogwarts.com",
     "first_name": "",
@@ -40,7 +40,7 @@
   "pk": 3,
   "fields": {
     "password": "pbkdf2_sha256$1200000$TUmTnpd9hvvk79uYr5OKev$0Lng7oZGlvKlwAXyL4otMN4EVCikD/Gp9l6SZrKItsU=",
-    "last_login": "2026-05-24T14:17:00.060Z",
+    "last_login": "2026-05-25T14:06:21.128Z",
     "is_superuser": false,
     "username": "hermione@hogwarts.com",
     "first_name": "",
@@ -51,6 +51,446 @@
     "date_joined": "2026-05-24T14:16:59.598Z",
     "groups": [],
     "user_permissions": []
+  }
+},
+{
+  "model": "mail.email",
+  "pk": 1,
+  "fields": {
+    "user": 1,
+    "sender": 1,
+    "subject": "Eae man",
+    "body": "d boa??",
+    "timestamp": "2026-05-25T07:39:18.841Z",
+    "read": true,
+    "archived": false,
+    "recipients": [
+      2
+    ]
+  }
+},
+{
+  "model": "mail.email",
+  "pk": 2,
+  "fields": {
+    "user": 2,
+    "sender": 1,
+    "subject": "Eae man",
+    "body": "d boa??",
+    "timestamp": "2026-05-25T07:39:18.847Z",
+    "read": true,
+    "archived": false,
+    "recipients": [
+      2
+    ]
+  }
+},
+{
+  "model": "mail.email",
+  "pk": 3,
+  "fields": {
+    "user": 1,
+    "sender": 1,
+    "subject": "Eae man",
+    "body": "d boa??",
+    "timestamp": "2026-05-25T09:31:44.758Z",
+    "read": true,
+    "archived": false,
+    "recipients": [
+      2
+    ]
+  }
+},
+{
+  "model": "mail.email",
+  "pk": 4,
+  "fields": {
+    "user": 2,
+    "sender": 1,
+    "subject": "Eae man",
+    "body": "d boa??",
+    "timestamp": "2026-05-25T09:31:44.760Z",
+    "read": true,
+    "archived": false,
+    "recipients": [
+      2
+    ]
+  }
+},
+{
+  "model": "mail.email",
+  "pk": 5,
+  "fields": {
+    "user": 1,
+    "sender": 1,
+    "subject": "oporra",
+    "body": "d boa caraio???",
+    "timestamp": "2026-05-25T09:31:58.826Z",
+    "read": true,
+    "archived": false,
+    "recipients": [
+      2
+    ]
+  }
+},
+{
+  "model": "mail.email",
+  "pk": 6,
+  "fields": {
+    "user": 2,
+    "sender": 1,
+    "subject": "oporra",
+    "body": "d boa caraio???",
+    "timestamp": "2026-05-25T09:31:58.832Z",
+    "read": true,
+    "archived": false,
+    "recipients": [
+      2
+    ]
+  }
+},
+{
+  "model": "mail.email",
+  "pk": 7,
+  "fields": {
+    "user": 1,
+    "sender": 1,
+    "subject": "slprr",
+    "body": "dasdas ",
+    "timestamp": "2026-05-25T10:12:35.467Z",
+    "read": true,
+    "archived": false,
+    "recipients": [
+      2
+    ]
+  }
+},
+{
+  "model": "mail.email",
+  "pk": 8,
+  "fields": {
+    "user": 2,
+    "sender": 1,
+    "subject": "slprr",
+    "body": "dasdas ",
+    "timestamp": "2026-05-25T10:12:35.469Z",
+    "read": false,
+    "archived": false,
+    "recipients": [
+      2
+    ]
+  }
+},
+{
+  "model": "mail.email",
+  "pk": 9,
+  "fields": {
+    "user": 1,
+    "sender": 1,
+    "subject": "dadwe",
+    "body": "dsadas",
+    "timestamp": "2026-05-25T10:12:54.610Z",
+    "read": true,
+    "archived": false,
+    "recipients": [
+      2
+    ]
+  }
+},
+{
+  "model": "mail.email",
+  "pk": 10,
+  "fields": {
+    "user": 2,
+    "sender": 1,
+    "subject": "dadwe",
+    "body": "dsadas",
+    "timestamp": "2026-05-25T10:12:54.615Z",
+    "read": true,
+    "archived": false,
+    "recipients": [
+      2
+    ]
+  }
+},
+{
+  "model": "mail.email",
+  "pk": 11,
+  "fields": {
+    "user": 1,
+    "sender": 1,
+    "subject": "teste",
+    "body": "a adasda ",
+    "timestamp": "2026-05-25T10:16:38.149Z",
+    "read": true,
+    "archived": false,
+    "recipients": [
+      2
+    ]
+  }
+},
+{
+  "model": "mail.email",
+  "pk": 12,
+  "fields": {
+    "user": 2,
+    "sender": 1,
+    "subject": "teste",
+    "body": "a adasda ",
+    "timestamp": "2026-05-25T10:16:38.156Z",
+    "read": false,
+    "archived": false,
+    "recipients": [
+      2
+    ]
+  }
+},
+{
+  "model": "mail.email",
+  "pk": 13,
+  "fields": {
+    "user": 1,
+    "sender": 1,
+    "subject": "dsada",
+    "body": "dasdas",
+    "timestamp": "2026-05-25T10:22:39.187Z",
+    "read": true,
+    "archived": false,
+    "recipients": [
+      2
+    ]
+  }
+},
+{
+  "model": "mail.email",
+  "pk": 14,
+  "fields": {
+    "user": 2,
+    "sender": 1,
+    "subject": "dsada",
+    "body": "dasdas",
+    "timestamp": "2026-05-25T10:22:39.189Z",
+    "read": false,
+    "archived": false,
+    "recipients": [
+      2
+    ]
+  }
+},
+{
+  "model": "mail.email",
+  "pk": 15,
+  "fields": {
+    "user": 1,
+    "sender": 1,
+    "subject": "teste 23432",
+    "body": "dsadas",
+    "timestamp": "2026-05-25T10:28:38.372Z",
+    "read": true,
+    "archived": false,
+    "recipients": [
+      2
+    ]
+  }
+},
+{
+  "model": "mail.email",
+  "pk": 16,
+  "fields": {
+    "user": 2,
+    "sender": 1,
+    "subject": "teste 23432",
+    "body": "dsadas",
+    "timestamp": "2026-05-25T10:28:38.379Z",
+    "read": false,
+    "archived": false,
+    "recipients": [
+      2
+    ]
+  }
+},
+{
+  "model": "mail.email",
+  "pk": 17,
+  "fields": {
+    "user": 1,
+    "sender": 1,
+    "subject": "dsada",
+    "body": "dasdas",
+    "timestamp": "2026-05-25T10:49:15.568Z",
+    "read": true,
+    "archived": false,
+    "recipients": [
+      2
+    ]
+  }
+},
+{
+  "model": "mail.email",
+  "pk": 18,
+  "fields": {
+    "user": 2,
+    "sender": 1,
+    "subject": "dsada",
+    "body": "dasdas",
+    "timestamp": "2026-05-25T10:49:15.576Z",
+    "read": false,
+    "archived": false,
+    "recipients": [
+      2
+    ]
+  }
+},
+{
+  "model": "mail.email",
+  "pk": 19,
+  "fields": {
+    "user": 1,
+    "sender": 1,
+    "subject": "Eae man",
+    "body": "dasdas ",
+    "timestamp": "2026-05-25T10:50:14.741Z",
+    "read": true,
+    "archived": false,
+    "recipients": [
+      2
+    ]
+  }
+},
+{
+  "model": "mail.email",
+  "pk": 20,
+  "fields": {
+    "user": 2,
+    "sender": 1,
+    "subject": "Eae man",
+    "body": "dasdas ",
+    "timestamp": "2026-05-25T10:50:14.747Z",
+    "read": true,
+    "archived": false,
+    "recipients": [
+      2
+    ]
+  }
+},
+{
+  "model": "mail.email",
+  "pk": 21,
+  "fields": {
+    "user": 1,
+    "sender": 1,
+    "subject": "das",
+    "body": "dad",
+    "timestamp": "2026-05-25T10:53:18.641Z",
+    "read": true,
+    "archived": false,
+    "recipients": [
+      2
+    ]
+  }
+},
+{
+  "model": "mail.email",
+  "pk": 22,
+  "fields": {
+    "user": 2,
+    "sender": 1,
+    "subject": "das",
+    "body": "dad",
+    "timestamp": "2026-05-25T10:53:18.648Z",
+    "read": false,
+    "archived": false,
+    "recipients": [
+      2
+    ]
+  }
+},
+{
+  "model": "mail.email",
+  "pk": 23,
+  "fields": {
+    "user": 1,
+    "sender": 1,
+    "subject": "slprr",
+    "body": "dasdsa",
+    "timestamp": "2026-05-25T10:56:17.498Z",
+    "read": true,
+    "archived": false,
+    "recipients": [
+      2
+    ]
+  }
+},
+{
+  "model": "mail.email",
+  "pk": 24,
+  "fields": {
+    "user": 2,
+    "sender": 1,
+    "subject": "slprr",
+    "body": "dasdsa",
+    "timestamp": "2026-05-25T10:56:17.505Z",
+    "read": false,
+    "archived": false,
+    "recipients": [
+      2
+    ]
+  }
+},
+{
+  "model": "mail.email",
+  "pk": 25,
+  "fields": {
+    "user": 2,
+    "sender": 2,
+    "subject": "teste pra mim mesmo",
+    "body": "dsadas",
+    "timestamp": "2026-05-25T12:15:44.540Z",
+    "read": true,
+    "archived": false,
+    "recipients": [
+      2
+    ]
+  }
+},
+{
+  "model": "mail.email",
+  "pk": 26,
+  "fields": {
+    "user": 1,
+    "sender": 2,
+    "subject": "Renato Russo",
+    "body": "Cara AIDS não existe essas porra de cazuza, de renato russo de fred mercury.... Essas porra morreu de câncer, tuberculose, pneumonia. Eles falam que é AIDS mas AIDS não existe cara, eles inventa essa porra ai pras empresas de preservativo lucrarem com preservativos cara, AIDS não existe\nPessoa morre de qualquer porra de câncer de gripe de pneumonia de ququer coisa. DST existe mas caldo de cana corta, toma um caldo de cana com pastel de carne, tá tranquilo, e tem que ter fé. Bagulho é psicológico, mano, é igual câncer se tu fizer um exame hoje e tiver com câncer, amanhã tu tá fudido de cama e morre, mas quem num sabe passa tipo 10 anos com tumor pq num sabe e num morre. Então mano tu tem q ter fé no q tu vai fazer e pra garantir o caldo de cana pq o principal é ter fé, garantir o caldo de cana e não fazer exame!\n",
+    "timestamp": "2026-05-25T13:51:25.838Z",
+    "read": true,
+    "archived": false,
+    "recipients": [
+      1
+    ]
+  }
+},
+{
+  "model": "mail.email",
+  "pk": 27,
+  "fields": {
+    "user": 2,
+    "sender": 2,
+    "subject": "Renato Russo",
+    "body": "Cara AIDS não existe essas porra de cazuza, de renato russo de fred mercury.... Essas porra morreu de câncer, tuberculose, pneumonia. Eles falam que é AIDS mas AIDS não existe cara, eles inventa essa porra ai pras empresas de preservativo lucrarem com preservativos cara, AIDS não existe\nPessoa morre de qualquer porra de câncer de gripe de pneumonia de ququer coisa. DST existe mas caldo de cana corta, toma um caldo de cana com pastel de carne, tá tranquilo, e tem que ter fé. Bagulho é psicológico, mano, é igual câncer se tu fizer um exame hoje e tiver com câncer, amanhã tu tá fudido de cama e morre, mas quem num sabe passa tipo 10 anos com tumor pq num sabe e num morre. Então mano tu tem q ter fé no q tu vai fazer e pra garantir o caldo de cana pq o principal é ter fé, garantir o caldo de cana e não fazer exame!\n",
+    "timestamp": "2026-05-25T13:51:25.846Z",
+    "read": true,
+    "archived": false,
+    "recipients": [
+      1
+    ]
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "c5hp4uxelndp6uu6gb4wapddr726xkpi",
+  "fields": {
+    "session_data": ".eJxVjDsOwjAQBe_iGlnxB38o6XMGa73rxQHkSHFSIe4OkVJA-2bmvUSCba1p62VJE4mLUOL0u2XAR2k7oDu02yxxbusyZbkr8qBdjjOV5_Vw_w4q9PqtMQMQFbDGMZytZWM1ZQVc0AwKtbdKU_DaGS7eqWiAMUTUnCPHIVjx_gATCjiO:1wQQUU:IfDDN6vSe_tGZlYexaOrQ4wph3n4-mDJrRuuAWzY4Aw",
+    "expire_date": "2026-06-05T14:04:42.998Z"
   }
 }
 ]
