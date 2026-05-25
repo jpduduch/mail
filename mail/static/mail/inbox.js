@@ -91,7 +91,7 @@ function render_emails(emails) {
                 <h5 class="mb-1">${email.subject}</h5>
                 <small class="text-body-secondary">${email.timestamp}</small>
             </div>
-            <p class="mb-1">${email.recipients}</p>
+            <p class="mb-1">${email.sender}</p>
         `
 
         if (email.read) {
