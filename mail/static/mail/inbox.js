@@ -86,24 +86,13 @@ function render_emails(emails) {
         email_list_item.setAttribute('href', `/emails/${email.id}`);
         email_list_group.append(email_list_item);
 
-        const div = document.createElement('div');
-        div.classList.add('d-flex', 'w-100', 'justify-content-between');
-        email_list_item.append(div);
-
-        const title = document.createElement('h5');
-        title.classList.add('mb-1');
-        div.append(title);
-        title.innerHTML = email.subject;
-
-        const date = document.createElement('small');
-        date.classList.add('text-body-secondary');
-        div.append(date);
-        date.innerHTML = email.timestamp;
-
-        const sender = document.createElement('p');
-        sender.classList.add('mb-1');
-        email_list_item.append(sender);
-        sender.innerHTML = email.sender;
+        email_list_item.innerHTML = `
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">${email.subject}</h5>
+                <small class="text-body-secondary">${email.timestamp}</small>
+            </div>
+            <p class="mb-1">${email.recipients}</p>
+        `
 
         if (email.read) {
             email_list_item.classList.add('list-group-item-secondary');
