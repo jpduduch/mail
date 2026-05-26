@@ -123,6 +123,14 @@ function render_emails(emails) {
 
 function render_email(email) {
 
+    // Mark as read
+    fetch(`/emails/${email.id}`, {
+        method: 'PUT',
+        body: JSON.stringify({
+            read: true
+        })
+    })
+
     clear();
     show_view('#email-view');
 
@@ -162,14 +170,6 @@ function render_email(email) {
     email_view.append(body);
 
     body.innerHTML = email.body;
-
-    // Mark as read
-    fetch(`/emails/${email.id}`, {
-        method: 'PUT',
-        body: JSON.stringify({
-            read: true
-        })
-    })
 }
 
 function manage_archive_email(email) {
@@ -194,7 +194,6 @@ function clear() {
     document.querySelector('#compose-body').value = '';
 
     // Clear inbox
-    document.querySelector('#emails-view').innerHTML = '';
     document.querySelector('#emails-view').innerHTML = `<h3>${current_mailbox.charAt(0).toUpperCase() + current_mailbox.slice(1)}</h3>`;
 
     // Clear email view
@@ -210,7 +209,7 @@ function feedback_message(destination, message) {
     document.querySelector(destination).insertAdjacentElement('beforebegin', msg);
 
     // Destroy message after 6s.
-    setInterval(() => {
+    setTimeout(() => {
         msg.remove();
     }, 6000);
 
@@ -225,7 +224,7 @@ function show_view(view) {
     ]
 
     // Set the right view to active
-    for (selected_view of views) {
+    for (const selected_view of views) {
         if (selected_view === view) {
             document.querySelector(selected_view).style.display = 'block';
         } else {
