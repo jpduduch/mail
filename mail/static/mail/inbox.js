@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelector('#inbox').addEventListener('click', () => load_mailbox('inbox'));
     document.querySelector('#sent').addEventListener('click', () => load_mailbox('sent'));
     document.querySelector('#archived').addEventListener('click', () => load_mailbox('archive'));
-    document.querySelector('#compose').addEventListener('click', compose_email);
+    document.querySelector('#compose').addEventListener('click', () => compose_email());
 
     // By default, load the inbox
     load_mailbox('inbox');
@@ -17,11 +17,18 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelector('#compose-form').addEventListener('submit', send_mail);
 });
 
-function compose_email() {
+function compose_email(email = null) {
 
     // Show compose view and hide other views
     clear();
     show_view('#compose-view');
+
+    // Populate data if any
+    if (email !== null) {
+        document.querySelector('#compose-recipients').value = email.recipients;
+        document.querySelector('#compose-subject').value = email.subject.startsWith('Re: ') ? email.subject : 'Re: ' + email.subject;
+        document.querySelector('#compose-body').value = 'On ' + email.timestamp + ' ' + email.sender + ' wrote:\n\n' + email.body;
+    }
 }
 
 function load_mailbox(mailbox) {
@@ -136,6 +143,8 @@ function render_email(email) {
     reply_button.classList.add('btn', 'btn-sm', 'btn-outline-primary', 'mb-1', 'mr-1');
     email_view.append(reply_button);
     reply_button.innerHTML = 'Reply';
+
+    reply_button.addEventListener('click', () => compose_email(email));
 
     // Metadata header
     const metadata = document.createElement('ul');
