@@ -63,11 +63,11 @@ function send_mail(event) {
     .then(response => response.json())
     .then(result => {
         if ("error" in result) {
-            feedback_message('#compose-view > h3', result.error);
+            feedback_message('#compose-view', result.error);
         } else {
             clear();
             load_mailbox('sent');
-            feedback_message('#emails-view > h3', result.message);
+            feedback_message('#emails-view', result.message);
         }
     })
 }
@@ -76,7 +76,6 @@ function render_emails(emails) {
 
     clear();
 
-    console.log(emails)
     const email_list_group = document.querySelector('#emails-view');
 
     if (Object.keys(emails).length === 0) {
@@ -116,7 +115,6 @@ function render_emails(emails) {
 }
 
 function render_email(email) {
-    console.log(email)
 
     clear();
     show_view('#email-view');
@@ -200,7 +198,7 @@ function feedback_message(destination, message) {
     const msg = document.createElement('div');
     msg.classList.add('alert', 'alert-primary');
     msg.innerHTML = message;
-    document.querySelector(destination).insertAdjacentElement('afterend', msg);
+    document.querySelector(destination).insertAdjacentElement('beforebegin', msg);
 
     // Destroy message after 6s.
     setInterval(() => {
