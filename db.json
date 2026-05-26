@@ -4,7 +4,7 @@
   "pk": 1,
   "fields": {
     "password": "pbkdf2_sha256$1200000$8btGfgyf1mqitKSeDpds1l$Xx0+FX68RjotsmFTaW1SsWpOqwwOp0ZYxhhmkCofCUQ=",
-    "last_login": "2026-05-25T14:00:40.284Z",
+    "last_login": "2026-05-26T08:34:11.987Z",
     "is_superuser": false,
     "username": "harry@hogwarts.com",
     "first_name": "",
@@ -22,7 +22,7 @@
   "pk": 2,
   "fields": {
     "password": "pbkdf2_sha256$1200000$W9b0TfxaOdn56NN8TBDdWX$YEYVuMoTnYwMlYwObOe+Bck+cnpHjnPIJ6P3sczIADc=",
-    "last_login": "2026-05-25T13:39:50.172Z",
+    "last_login": "2026-05-26T11:07:06.533Z",
     "is_superuser": false,
     "username": "ron@hogwarts.com",
     "first_name": "",
@@ -40,7 +40,7 @@
   "pk": 3,
   "fields": {
     "password": "pbkdf2_sha256$1200000$TUmTnpd9hvvk79uYr5OKev$0Lng7oZGlvKlwAXyL4otMN4EVCikD/Gp9l6SZrKItsU=",
-    "last_login": "2026-05-25T14:06:21.128Z",
+    "last_login": "2026-05-26T11:32:19.028Z",
     "is_superuser": false,
     "username": "hermione@hogwarts.com",
     "first_name": "",
@@ -430,7 +430,7 @@
     "subject": "slprr",
     "body": "dasdsa",
     "timestamp": "2026-05-25T10:56:17.505Z",
-    "read": false,
+    "read": true,
     "archived": false,
     "recipients": [
       2
@@ -482,6 +482,294 @@
     "archived": false,
     "recipients": [
       1
+    ]
+  }
+},
+{
+  "model": "mail.email",
+  "pk": 28,
+  "fields": {
+    "user": 1,
+    "sender": 1,
+    "subject": "teste pra mim mesmo",
+    "body": "eae mano",
+    "timestamp": "2026-05-26T09:32:10.789Z",
+    "read": true,
+    "archived": false,
+    "recipients": [
+      2
+    ]
+  }
+},
+{
+  "model": "mail.email",
+  "pk": 29,
+  "fields": {
+    "user": 2,
+    "sender": 1,
+    "subject": "teste pra mim mesmo",
+    "body": "eae mano",
+    "timestamp": "2026-05-26T09:32:10.795Z",
+    "read": false,
+    "archived": false,
+    "recipients": [
+      2
+    ]
+  }
+},
+{
+  "model": "mail.email",
+  "pk": 30,
+  "fields": {
+    "user": 1,
+    "sender": 1,
+    "subject": "dasdas",
+    "body": "dasd ad as dasdas",
+    "timestamp": "2026-05-26T10:50:25.435Z",
+    "read": true,
+    "archived": false,
+    "recipients": [
+      2
+    ]
+  }
+},
+{
+  "model": "mail.email",
+  "pk": 31,
+  "fields": {
+    "user": 2,
+    "sender": 1,
+    "subject": "dasdas",
+    "body": "dasd ad as dasdas",
+    "timestamp": "2026-05-26T10:50:25.440Z",
+    "read": true,
+    "archived": false,
+    "recipients": [
+      2
+    ]
+  }
+},
+{
+  "model": "mail.email",
+  "pk": 32,
+  "fields": {
+    "user": 1,
+    "sender": 1,
+    "subject": "eae ",
+    "body": "top??",
+    "timestamp": "2026-05-26T10:50:49.529Z",
+    "read": true,
+    "archived": false,
+    "recipients": [
+      2
+    ]
+  }
+},
+{
+  "model": "mail.email",
+  "pk": 33,
+  "fields": {
+    "user": 2,
+    "sender": 1,
+    "subject": "eae ",
+    "body": "top??",
+    "timestamp": "2026-05-26T10:50:49.535Z",
+    "read": true,
+    "archived": false,
+    "recipients": [
+      2
+    ]
+  }
+},
+{
+  "model": "mail.email",
+  "pk": 34,
+  "fields": {
+    "user": 1,
+    "sender": 1,
+    "subject": "dsadas",
+    "body": "daserter er qe ",
+    "timestamp": "2026-05-26T10:51:10.223Z",
+    "read": true,
+    "archived": false,
+    "recipients": [
+      2
+    ]
+  }
+},
+{
+  "model": "mail.email",
+  "pk": 35,
+  "fields": {
+    "user": 2,
+    "sender": 1,
+    "subject": "dsadas",
+    "body": "daserter er qe ",
+    "timestamp": "2026-05-26T10:51:10.229Z",
+    "read": false,
+    "archived": false,
+    "recipients": [
+      2
+    ]
+  }
+},
+{
+  "model": "mail.email",
+  "pk": 36,
+  "fields": {
+    "user": 1,
+    "sender": 1,
+    "subject": "dsadas",
+    "body": "",
+    "timestamp": "2026-05-26T10:52:45.883Z",
+    "read": true,
+    "archived": false,
+    "recipients": [
+      2
+    ]
+  }
+},
+{
+  "model": "mail.email",
+  "pk": 37,
+  "fields": {
+    "user": 2,
+    "sender": 1,
+    "subject": "dsadas",
+    "body": "",
+    "timestamp": "2026-05-26T10:52:45.889Z",
+    "read": true,
+    "archived": false,
+    "recipients": [
+      2
+    ]
+  }
+},
+{
+  "model": "mail.email",
+  "pk": 38,
+  "fields": {
+    "user": 1,
+    "sender": 1,
+    "subject": "dsada das ",
+    "body": "dsa asd",
+    "timestamp": "2026-05-26T10:53:50.440Z",
+    "read": true,
+    "archived": false,
+    "recipients": [
+      2
+    ]
+  }
+},
+{
+  "model": "mail.email",
+  "pk": 39,
+  "fields": {
+    "user": 2,
+    "sender": 1,
+    "subject": "dsada das ",
+    "body": "dsa asd",
+    "timestamp": "2026-05-26T10:53:50.445Z",
+    "read": true,
+    "archived": false,
+    "recipients": [
+      2
+    ]
+  }
+},
+{
+  "model": "mail.email",
+  "pk": 40,
+  "fields": {
+    "user": 1,
+    "sender": 1,
+    "subject": "ds",
+    "body": "dasdas",
+    "timestamp": "2026-05-26T10:55:55.084Z",
+    "read": true,
+    "archived": false,
+    "recipients": [
+      2
+    ]
+  }
+},
+{
+  "model": "mail.email",
+  "pk": 41,
+  "fields": {
+    "user": 2,
+    "sender": 1,
+    "subject": "ds",
+    "body": "dasdas",
+    "timestamp": "2026-05-26T10:55:55.090Z",
+    "read": true,
+    "archived": true,
+    "recipients": [
+      2
+    ]
+  }
+},
+{
+  "model": "mail.email",
+  "pk": 42,
+  "fields": {
+    "user": 1,
+    "sender": 1,
+    "subject": "teste final",
+    "body": "tudo funciona?",
+    "timestamp": "2026-05-26T11:06:49.098Z",
+    "read": true,
+    "archived": false,
+    "recipients": [
+      2
+    ]
+  }
+},
+{
+  "model": "mail.email",
+  "pk": 43,
+  "fields": {
+    "user": 2,
+    "sender": 1,
+    "subject": "teste final",
+    "body": "tudo funciona?",
+    "timestamp": "2026-05-26T11:06:49.105Z",
+    "read": true,
+    "archived": true,
+    "recipients": [
+      2
+    ]
+  }
+},
+{
+  "model": "mail.email",
+  "pk": 44,
+  "fields": {
+    "user": 2,
+    "sender": 2,
+    "subject": "Re: dsada das ",
+    "body": "On May 26 2026, 10:53 AM harry@hogwarts.com wrote:\n\ndsa asd",
+    "timestamp": "2026-05-26T11:28:40.657Z",
+    "read": true,
+    "archived": false,
+    "recipients": [
+      2
+    ]
+  }
+},
+{
+  "model": "mail.email",
+  "pk": 45,
+  "fields": {
+    "user": 2,
+    "sender": 2,
+    "subject": "dasd ",
+    "body": "da asd a tw ",
+    "timestamp": "2026-05-26T11:29:55.851Z",
+    "read": true,
+    "archived": true,
+    "recipients": [
+      2
     ]
   }
 },
