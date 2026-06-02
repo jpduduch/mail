@@ -1,52 +1,46 @@
 function App() {
+
+    const [activeView, setActiveView] = React.useState("inbox");
+
     return (
-
         <div>
-            // Top menu
+            {/* Top menu */}
             <nav>
-                <TabItem name="Inbox" />
-                <TabItem name="Compose" />
-                <TabItem name="Sent" />
-                <TabItem name="Archive" />
-                <TabItem name="Log Out" />
+                <TabItem name="Inbox" onSelect={() => setActiveView("inbox")} />
+                <TabItem name="Compose" onSelect={() => setActiveView("compose")} />
+                <TabItem name="Sent" onSelect={() => setActiveView("sent")} />
+                <TabItem name="Archived" onSelect={() => setActiveView("archived")} />
             </nav>
-
-            <MailListItem />
+            {activeView === 'compose' ? <ComposeForm /> : <MailBox name={activeView} />}
         </div>
     )
 }
 
 // Components
 
-function TabItem(props) {
+function TabItem({name, onSelect}) {
+
     return (
         <button
-            className="btn btn-sm btn-outline-primary"
-            id={(props.name.toLowerCase())}
-            // onClick={load_mailbox(props.name.toLowerCase())}
-        >
-            {props.name}
+            className="btn btn-sm btn-outline-primary mr-1"
+            onClick={onSelect}
+            >
+            {name}
         </button>
     )
 }
 
-function MailListItem(name) {
-
-    // receber dados de fetch
-    // processar se houver algo a fazer
-
-    //renderizar
-    return (
-        <div>
-            <a href="#" className="list-group-item list-group-item-action">
-                <div className="d-flex w-100 justify-content-between">
-                    <h5 className="mb-1">Email subject</h5>
-                    <small className="text-body secondary">Date</small>
-                </div>
-                <p className="mb-1">sender</p>
-            </a>
+function MailBox({name}) {
+    return(
+        <div className="p-3 text-primary-emphasis bg-primary-subtle border border-primary-subtle rounded-3">
+            {name} "test"
         </div>
     )
+
+}
+
+function ComposeForm() {
+
 }
 
 ReactDOM.render(<App />, document.querySelector("#app"));
