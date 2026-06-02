@@ -3,16 +3,6 @@
 
 {% block body %}
     <h2>{{ request.user.email }}</h2>
-    <nav>
-        <div>
-            <button class="btn btn-sm btn-outline-primary" id="inbox">Inbox</button>
-            <button class="btn btn-sm btn-outline-primary" id="compose">Compose</button>
-            <button class="btn btn-sm btn-outline-primary" id="sent">Sent</button>
-            <button class="btn btn-sm btn-outline-primary" id="archived">Archived</button>
-            <a class="btn btn-sm btn-outline-primary" href="{% url 'logout' %}">Log Out</a>
-        </div>
-    </nav>
-    <hr>
 
     <div id="app"></div>
     {% comment %} <div id="emails-view"></div> {% endcomment %}
