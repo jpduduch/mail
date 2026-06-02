@@ -11,6 +11,7 @@ function App() {
                 <TabItem name="Sent" onSelect={() => setActiveView("sent")} />
                 <TabItem name="Archived" onSelect={() => setActiveView("archived")} />
             </nav>
+            <hr />
             {activeView === 'compose' ? <ComposeForm /> : <MailBox name={activeView} />}
         </div>
     )
