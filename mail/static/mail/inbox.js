@@ -1,47 +1,69 @@
+/* <TabItem name="Inbox" changeView={() => handleView("inbox")} />
+<TabItem name="Compose" changeView={() => handleView("inbox")} />
+<TabItem name="Sent" changeView={() => handleView("inbox")} />
+<TabItem name="Archived" changeView={() => handleView("inbox")} /> */
+
 function App() {
+
+    let main;
+    const views = [
+        "Inbox",
+        "Compose",
+        "Sent",
+        "Archived"
+    ]
 
     const [activeView, setActiveView] = React.useState("inbox");
 
-    return (
+    function handleActiveView(name) {
+        setActiveView(name.toLowerCase())
+    }
+
+    function renderView() {
+        switch (activeView) {
+            case 'compose':
+                console.log(activeView);
+                break
+            case 'email':
+                console.log(activeView);
+                break
+            default:
+                return <MailBox name={activeView} />
+        }
+    }
+
+    return(
         <div>
-            {/* Top menu */}
-            <nav>
-                <TabItem name="Inbox" onSelect={() => setActiveView("inbox")} />
-                <TabItem name="Compose" onSelect={() => setActiveView("compose")} />
-                <TabItem name="Sent" onSelect={() => setActiveView("sent")} />
-                <TabItem name="Archived" onSelect={() => setActiveView("archived")} />
-            </nav>
-            <hr />
-            {activeView === 'compose' ? <ComposeForm /> : <MailBox name={activeView} />}
+            {
+                views.map(view => {
+                    return <TabItem key={view} name={view} getView={() => handleActiveView(view)}  />
+                })
+            }
+
+            {renderView()}
+
         </div>
     )
 }
 
-// Components
 
-function TabItem({name, onSelect}) {
+function TabItem({name, getView}) {
 
     return (
-        <button
-            className="btn btn-sm btn-outline-primary mr-1"
-            onClick={onSelect}
-            >
-            {name}
-        </button>
+        <div>
+            <button onClick={getView}>
+                {name}
+            </button>
+        </div>
     )
 }
 
 function MailBox({name}) {
-    return(
-        <div className="p-3 text-primary-emphasis bg-primary-subtle border border-primary-subtle rounded-3">
-            {name} "test"
+    return (
+        <div>
+            {name}
         </div>
     )
-
-}
-
-function ComposeForm() {
-
 }
 
 ReactDOM.render(<App />, document.querySelector("#app"));
