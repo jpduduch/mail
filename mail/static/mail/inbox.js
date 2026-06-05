@@ -1,8 +1,3 @@
-/* <TabItem name="Inbox" changeView={() => handleView("inbox")} />
-<TabItem name="Compose" changeView={() => handleView("inbox")} />
-<TabItem name="Sent" changeView={() => handleView("inbox")} />
-<TabItem name="Archived" changeView={() => handleView("inbox")} /> */
-
 function App() {
 
     let main;
@@ -28,40 +23,49 @@ function App() {
                 console.log(activeView);
                 break
             default:
-                return <MailBox name={activeView} />
+                return <MailBox category={activeView} />
         }
     }
 
     return(
-        <div>
+        <nav>
             {
                 views.map(view => {
-                    return <TabItem key={view} name={view} getView={() => handleActiveView(view)}  />
+                    return <TabItem key={view} name={view} onSelect={() => handleActiveView(view)}  />
                 })
             }
 
             {renderView()}
 
-        </div>
+        </nav>
     )
 }
 
 
-function TabItem({name, getView}) {
+function TabItem({name, onSelect}) {
 
     return (
-        <div>
-            <button onClick={getView}>
-                {name}
-            </button>
-        </div>
-    )
-}
-
-function MailBox({name}) {
-    return (
-        <div>
+        <button onClick={onSelect} className="btn btn-sm btn-outline-primary mr-1">
             {name}
+        </button>
+    )
+}
+
+function MailBox({category, onSelect}) {
+
+    const [emails, setEmails] = React.useState([]);
+
+    React.useEffect(() => {
+        fetch(`/emails/${category}`)
+        .then(response => response.json())
+        .then(data => {
+            setEmails(data)
+        })
+    }, [category])
+
+    return (
+        <div>
+            {emails.map(data => console.log(data))}
         </div>
     )
 }
