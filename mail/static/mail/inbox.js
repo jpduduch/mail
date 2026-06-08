@@ -1,6 +1,4 @@
 function App() {
-
-    let main;
     const views = [
         "Inbox",
         "Compose",
@@ -83,6 +81,7 @@ function MailListItem({metadata, onSelect}) {
 
     function loadMail(event, id) {
         event.preventDefault();
+        // todo
     }
 
     return (
