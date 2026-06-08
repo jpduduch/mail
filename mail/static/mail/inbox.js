@@ -131,17 +131,18 @@ function ComposeForm() {
                 subject: fields.subject,
                 body: fields.body
             })
-            .then(response => response.json())
-            .then(result => {
-                setFeedback(()=> {
-                    if ("error" in result) {
-                        result.error
-                    } else {
-                        result.message
-                    }
-                })
-            })
         })
+        .then(response => response.json())
+        .then(result => {
+            // let message;
+            // if ("error" in result) {
+            //     message = result.error
+            // } else {
+            //     message = result.message
+            // }
+            // setFeedback(message)
+        })
+
     }
 
     return (
