@@ -102,25 +102,79 @@ function MailListItem({metadata, onSelect}) {
 }
 
 function ComposeForm() {
+
+    const [mailFields, setMailFields] = React.useState({
+        recipients: '',
+        subject: '',
+        body: ''
+    });
+
+
+    function updateField(event) {
+
+        const { name, value } = event.target;
+
+        setMailFields(prev => ({
+            ...prev,
+            [name]: value
+        }))
+    }
+
+    const [feedback, setFeedback] = React.useState(null);
+
+    function sendMail(event, fields) {
+        event.preventDefault();
+        fetch('/emails', {
+            method: 'POST',
+            body: JSON.stringify({
+                recipients: fields.recipients,
+                subject: fields.subject,
+                body: fields.body
+            })
+            .then(response => response.json())
+            .then(result => {
+                setFeedback(()=> {
+                    if ("error" in result) {
+                        result.error
+                    } else {
+                        result.message
+                    }
+                })
+            })
+        })
+    }
+
     return (
         <div>
             <h2>
                 New Mail
             </h2>
-
+            {
+                feedback ? <Alert message={feedback} /> : null
+            }
             <form>
                 <div className="form-group">
-                    From: <input disabled className="form-control" value="Sender (you)" />
+                    From: <input disabled className="form-control" value="Sender (you)" onChange={updateField} />
                 </div>
                 <div className="form-group">
-                    To: <input className="form-control" />
+                    To: <input className="form-control" name="recipients" value={mailFields.recipients} onChange={updateField} />
                 </div>
                 <div className="form-group">
-                    <input className="form-control" placeholder="Subject" />
+                    <input className="form-control" name="subject" placeholder="Subject" value={mailFields.subject} onChange={updateField} />
                 </div>
-                <textarea class="form-control mb-1" id="compose-body" placeholder="Body"></textarea>
-                <input type="submit" class="btn btn-primary" />
+                <textarea class="form-control mb-1" name="body" placeholder="Body" value={mailFields.body} onChange={updateField}></textarea>
+
+                <input type="submit" class="btn btn-primary" onClick={(event) => sendMail(event, mailFields)} />
             </form>
+        </div>
+    )
+}
+
+
+function Alert(message) {
+    return (
+        <div className="alert alert-primary">
+            {message}
         </div>
     )
 }
