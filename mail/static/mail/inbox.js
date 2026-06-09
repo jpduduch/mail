@@ -3,7 +3,7 @@ function App() {
         "Inbox",
         "Compose",
         "Sent",
-        "Archived"
+        "Archive"
     ]
 
     const [activeView, setActiveView] = React.useState("inbox");
@@ -56,7 +56,7 @@ function MainView({category, loadView}) {
         return () => clearTimeout(timer);
     }, [alert])
 
-    const isMailbox = (category === 'inbox' || category === 'sent' || category === 'archived') ? true : false;
+    const isMailbox = (category === 'inbox' || category === 'sent' || category === 'archive') ? true : false;
 
     // Load mailbox data when a tab item is clicked
     React.useEffect(() => {
@@ -69,10 +69,12 @@ function MainView({category, loadView}) {
         .then(response => response.json())
         .then(metadata => {
             setEmails(metadata);
+            console.log(category)
+            console.log(emails);
         })
     }, [category])
 
-    // renders
+    // render Compose Form
     if (!isMailbox) {
         return (
             <div>
@@ -81,11 +83,16 @@ function MainView({category, loadView}) {
         );
     }
 
+    // Render Emails
     return (
         <div>
             {alert ? <Alert message={alert} /> : null }
             <h2>{category.charAt(0).toUpperCase() + category.slice(1)}</h2>
-            {emails.map(metadata => <MailListItem metadata={metadata} />)}
+            {
+                emails.length === 0 ?
+                'No emails in this mailbox.' :
+                emails.map(metadata => <MailListItem metadata={metadata} />)
+            }
         </div>
     )
 }
