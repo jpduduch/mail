@@ -134,13 +134,15 @@ function ComposeForm() {
         })
         .then(response => response.json())
         .then(result => {
-            // let message;
-            // if ("error" in result) {
-            //     message = result.error
-            // } else {
-            //     message = result.message
-            // }
-            // setFeedback(message)
+            if ('error' in result) {
+                setFeedback(result.error)
+            } else {
+                setFeedback(result.message)
+            }
+
+            setTimeout(() => {
+                setFeedback(null);
+            }, 6000);
         })
 
     }
@@ -172,7 +174,7 @@ function ComposeForm() {
 }
 
 
-function Alert(message) {
+function Alert({message}) {
     return (
         <div className="alert alert-primary">
             {message}
