@@ -10,7 +10,6 @@ function App() {
 
     function handleActiveView(name) {
         setActiveView(name.toLowerCase())
-
     }
 
     return(
@@ -25,12 +24,11 @@ function App() {
 
             <hr />
 
-            <MainView category={activeView} onSelect={handleActiveView} />
+            <MainView category={activeView} loadView={handleActiveView} />
 
         </div>
     )
 }
-
 
 function TabItem({name, onSelect}) {
 
@@ -41,12 +39,26 @@ function TabItem({name, onSelect}) {
     )
 }
 
-function MainView({category, onSelect}) {
+function MainView({category, loadView}) {
 
     const [emails, setEmails] = React.useState([]);
+    const [alert, setAlert] = React.useState(null);
+
+    function handleAlert(alert) {
+        setAlert(alert);
+    }
+
+    // Listen if a alert is active and destroy alert inline component after 6s.
+    React.useEffect(() => {
+        if (!alert) return;
+
+        const timer = setTimeout(() => setAlert(null), 6000);
+        return () => clearTimeout(timer);
+    }, [alert])
 
     const isMailbox = (category === 'inbox' || category === 'sent' || category === 'archived') ? true : false;
 
+    // Load mailbox data when a tab item is clicked
     React.useEffect(() => {
 
         if (!isMailbox) {
@@ -60,16 +72,18 @@ function MainView({category, onSelect}) {
         })
     }, [category])
 
+    // renders
     if (!isMailbox) {
         return (
             <div>
-                <ComposeForm />
+                <ComposeForm onSuccess={loadView} sendAlert={handleAlert} alert={alert} />
             </div>
         );
     }
 
     return (
         <div>
+            {alert ? <Alert message={alert} /> : null }
             <h2>{category.charAt(0).toUpperCase() + category.slice(1)}</h2>
             {emails.map(metadata => <MailListItem metadata={metadata} />)}
         </div>
@@ -101,14 +115,13 @@ function MailListItem({metadata, onSelect}) {
     )
 }
 
-function ComposeForm() {
+function ComposeForm({onSuccess, sendAlert, alert}) {
 
     const [mailFields, setMailFields] = React.useState({
         recipients: '',
         subject: '',
         body: ''
     });
-
 
     function updateField(event) {
 
@@ -119,8 +132,6 @@ function ComposeForm() {
             [name]: value
         }))
     }
-
-    const [feedback, setFeedback] = React.useState(null);
 
     function sendMail(event, fields) {
         event.preventDefault();
@@ -135,16 +146,12 @@ function ComposeForm() {
         .then(response => response.json())
         .then(result => {
             if ('error' in result) {
-                setFeedback(result.error)
+                sendAlert(result.error)
             } else {
-                setFeedback(result.message)
+                sendAlert(result.message);
+                onSuccess("sent");
             }
-
-            setTimeout(() => {
-                setFeedback(null);
-            }, 6000);
         })
-
     }
 
     return (
@@ -153,7 +160,7 @@ function ComposeForm() {
                 New Mail
             </h2>
             {
-                feedback ? <Alert message={feedback} /> : null
+                alert ? <Alert message={alert} /> : null
             }
             <form>
                 <div className="form-group">
@@ -179,7 +186,7 @@ function Alert({message}) {
         <div className="alert alert-primary">
             {message}
         </div>
-    )
+    );
 }
 
 ReactDOM.render(<App />, document.querySelector("#app"));
