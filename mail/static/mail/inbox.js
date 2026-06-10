@@ -8,7 +8,10 @@ function App() {
 
     const [activeView, setActiveView] = React.useState("inbox");
 
-    function handleActiveView(name) {
+    function handleActiveView(event, name) {
+        if (event) {
+            event.preventDefault();
+        }
         setActiveView(name.toLowerCase())
     }
 
@@ -17,15 +20,12 @@ function App() {
             <nav>
                 {
                     views.map(view => {
-                        return <TabItem key={view} name={view} onSelect={() => handleActiveView(view)}  />
+                        return <TabItem key={view} name={view} onSelect={(event) => handleActiveView(event, view)}  />
                     })
                 }
             </nav>
-
             <hr />
-
-            <MainView category={activeView} loadView={handleActiveView} />
-
+            <MainView category={activeView} loadView={handleActiveView}  />
         </div>
     )
 }
@@ -43,6 +43,7 @@ function MainView({category, loadView}) {
 
     const [emails, setEmails] = React.useState([]);
     const [alert, setAlert] = React.useState(null);
+    const [email, setEmail] = React.useState();
 
     function handleAlert(alert) {
         setAlert(alert);
@@ -61,9 +62,7 @@ function MainView({category, loadView}) {
     // Load mailbox data when a tab item is clicked
     React.useEffect(() => {
 
-        if (!isMailbox) {
-            return;
-        }
+        if (!isMailbox) { return }
 
         fetch(`/emails/${category}`)
         .then(response => response.json())
@@ -73,6 +72,19 @@ function MainView({category, loadView}) {
             console.log(emails);
         })
     }, [category])
+
+    // load email
+    function loadMail(email) {
+    }
+
+    // render email
+    if (category === 'email') {
+        return (
+            <div>
+                todo
+            </div>
+        )
+    }
 
     // render Compose Form
     if (!isMailbox) {
@@ -91,7 +103,7 @@ function MainView({category, loadView}) {
             {
                 emails.length === 0 ?
                 'No emails in this mailbox.' :
-                emails.map(metadata => <MailListItem metadata={metadata} />)
+                emails.map(metadata => <MailListItem metadata={metadata} onSelect={() => } />)
             }
         </div>
     )
@@ -100,17 +112,12 @@ function MainView({category, loadView}) {
 function MailListItem({metadata, onSelect}) {
     const isRead = metadata.read ? 'list-group-item-secondary' : '';
 
-    function loadMail(event, id) {
-        event.preventDefault();
-        // todo
-    }
-
     return (
         <div>
             <a
                 href={`emails/${metadata.id}`}
                 className={`list-group-item list-group-item-action mb-1 ${isRead}`}
-                onClick={(event) => { loadMail(event, metadata.id) }}
+                onClick={(event) => {onSelect(event, 'email')}}
             >
                 <div className="d-flex w-100 justify-content-between">
                     <h5 className="mb-1">{metadata.subject}</h5>
