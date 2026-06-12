@@ -1,260 +1,236 @@
-function App() {
+// Globals
+
+let current_mailbox = '';
+
+document.addEventListener('DOMContentLoaded', function() {
+
+    // Use buttons to toggle between views
+    document.querySelector('#inbox').addEventListener('click', () => load_mailbox('inbox'));
+    document.querySelector('#sent').addEventListener('click', () => load_mailbox('sent'));
+    document.querySelector('#archived').addEventListener('click', () => load_mailbox('archive'));
+    document.querySelector('#compose').addEventListener('click', () => compose_email());
+
+    // By default, load the inbox
+    load_mailbox('inbox');
+    console.log("test");
+
+    // Submit trigger
+    document.querySelector('#compose-form').addEventListener('submit', send_mail);
+});
+
+function compose_email(email = null) {
+
+    // Show compose view and hide other views
+    clear();
+    show_view('#compose-view');
+
+    // Populate data if any
+    if (email !== null) {
+        document.querySelector('#compose-recipients').value = email.recipients;
+        document.querySelector('#compose-subject').value = email.subject.startsWith('Re: ') ? email.subject : 'Re: ' + email.subject;
+        document.querySelector('#compose-body').value = 'On ' + email.timestamp + ' ' + email.sender + ' wrote:\n\n' + email.body;
+    }
+}
+
+function load_mailbox(mailbox) {
+
+    current_mailbox = mailbox;
+
+    // Show the mailbox and hide other views
+    show_view('#emails-view');
+
+    // Show the mailbox name
+    document.querySelector('#emails-view').innerHTML = `<h3>${mailbox.charAt(0).toUpperCase() + mailbox.slice(1)}</h3>`;
+
+    // Get mails
+    fetch(`/emails/${mailbox}`)
+    .then(response => response.json())
+    .then(emails => {
+        render_emails(emails);
+    })
+}
+
+function send_mail(event) {
+
+    event.preventDefault();
+
+    // Collect data
+    const recipients = document.querySelector('#compose-recipients').value;
+    const subject = document.querySelector('#compose-subject').value;
+    const body = document.querySelector('#compose-body').value;
+
+    // Send mail
+    fetch('/emails', {
+        method: 'POST',
+        body: JSON.stringify({
+            recipients: recipients,
+            subject: subject,
+            body: body
+        })
+    })
+    .then(response => response.json())
+    .then(result => {
+        if ("error" in result) {
+            feedback_message('#compose-view', result.error);
+        } else {
+            clear();
+            load_mailbox('sent');
+            feedback_message('#emails-view', result.message);
+        }
+    })
+}
+
+function render_emails(emails) {
+
+    clear();
+
+    const email_list_group = document.querySelector('#emails-view');
+
+    if (Object.keys(emails).length === 0) {
+        email_list_group.innerHTML += `<p>No emails in this mailbox.</p>`
+        return
+    }
+
+    emails.forEach(email => {
+
+        const email_list_item = document.createElement('a');
+        email_list_item.classList.add('list-group-item', 'list-group-item-action');
+        email_list_item.setAttribute('href', `/emails/${email.id}`);
+        email_list_group.append(email_list_item);
+
+        email_list_item.innerHTML = `
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">${email.subject}</h5>
+                <small class="text-body-secondary">${email.timestamp}</small>
+            </div>
+            <p class="mb-1">${email.sender}</p>
+        `
+
+        if (email.read) {
+            email_list_item.classList.add('list-group-item-secondary');
+        }
+
+        email_list_item.addEventListener('click', (event) => {
+            event.preventDefault();
+
+            fetch(`emails/${email.id}`)
+            .then(response => response.json())
+            .then(email => {
+                render_email(email);
+            })
+        });
+    });
+}
+
+function render_email(email) {
+
+    // Mark as read
+    fetch(`/emails/${email.id}`, {
+        method: 'PUT',
+        body: JSON.stringify({
+            read: true
+        })
+    })
+
+    clear();
+    show_view('#email-view');
+
+    const email_view = document.querySelector('#email-view');
+
+    // Archive button
+    if (current_mailbox !== 'sent') {
+        const archive_button = document.createElement('button');
+        archive_button.classList.add('btn', 'btn-sm', 'btn-outline-primary', 'mb-1', 'mr-1');
+        email_view.append(archive_button);
+        archive_button.innerHTML = email.archived ? 'Unarchive' : 'Archive';
+
+        archive_button.addEventListener('click', () => manage_archive_email(email));
+    }
+
+    // Reply button
+    const reply_button = document.createElement('button');
+    reply_button.classList.add('btn', 'btn-sm', 'btn-outline-primary', 'mb-1', 'mr-1');
+    email_view.append(reply_button);
+    reply_button.innerHTML = 'Reply';
+
+    reply_button.addEventListener('click', () => compose_email(email));
+
+    // Metadata header
+    const metadata = document.createElement('ul');
+    metadata.classList.add('list-unstyled');
+    email_view.append(metadata);
+    metadata.innerHTML = `
+        <li><strong>From:</strong> ${email.sender}</li>
+        <li><strong>To:</strong> ${email.recipients}</li>
+        <li><strong>Subject:</strong> ${email.subject}</li>
+        <li><strong>Date:</strong> ${email.timestamp}</li>
+    `
+
+    // Email body
+    const body = document.createElement('section');
+    email_view.append(body);
+
+    body.innerHTML = email.body;
+}
+
+function manage_archive_email(email) {
+
+    const archive_switch = email.archived ? false : true;
+
+    fetch(`/emails/${email.id}`, {
+        method: 'PUT',
+        body: JSON.stringify({
+            archived: archive_switch
+        })
+    })
+    .then(() => load_mailbox('inbox'))
+}
+
+// Utils
+
+function clear() {
+    // Clear out composition fields
+    document.querySelector('#compose-recipients').value = '';
+    document.querySelector('#compose-subject').value = '';
+    document.querySelector('#compose-body').value = '';
+
+    // Clear inbox
+    document.querySelector('#emails-view').innerHTML = `<h3>${current_mailbox.charAt(0).toUpperCase() + current_mailbox.slice(1)}</h3>`;
+
+    // Clear email view
+    document.querySelector('#email-view').innerHTML = '';
+}
+
+function feedback_message(destination, message) {
+
+    // Create message component
+    const msg = document.createElement('div');
+    msg.classList.add('alert', 'alert-primary');
+    msg.innerHTML = message;
+    document.querySelector(destination).insertAdjacentElement('beforebegin', msg);
+
+    // Destroy message after 6s.
+    setTimeout(() => {
+        msg.remove();
+    }, 6000);
+
+}
+
+function show_view(view) {
+
     const views = [
-        "Inbox",
-        "Compose",
-        "Sent",
-        "Archive"
+        '#emails-view',
+        '#email-view',
+        '#compose-view'
     ]
 
-    const [activeView, setActiveView] = React.useState("inbox");
-    const [emailID, setEmailID] = React.useState(null);
-
-    function handleActiveView(name, event = null, emailID = null) {
-        if (event) {
-            event.preventDefault();
+    // Set the right view to active
+    for (const selected_view of views) {
+        if (selected_view === view) {
+            document.querySelector(selected_view).style.display = 'block';
+        } else {
+            document.querySelector(selected_view).style.display = 'none';
         }
-
-        if (emailID) {
-            setEmailID(emailID);
-        }
-
-        setActiveView(name.toLowerCase())
     }
 
-    return(
-        <div>
-            <nav>
-                {
-                    views.map(view => {
-                        return <TabItem key={view} name={view} onSelect={(event) => handleActiveView(view, event)}  />
-                    })
-                }
-            </nav>
-            <hr />
-            <MainView category={activeView} loadView={handleActiveView} emailID={emailID}  />
-        </div>
-    )
 }
-
-function TabItem({name, onSelect}) {
-
-    return (
-        <button onClick={onSelect} className="btn btn-sm btn-outline-primary mr-1">
-            {name}
-        </button>
-    )
-}
-
-function MainView({category, loadView, emailID}) {
-
-    const [emails, setEmails] = React.useState([]);
-    const [alert, setAlert] = React.useState(null);
-    const [email, setEmail] = React.useState({});
-
-    function handleAlert(alert) {
-        setAlert(alert);
-    }
-
-    // Listen if a alert is active and destroy alert inline component after 6s.
-    React.useEffect(() => {
-        if (!alert) return;
-
-        const timer = setTimeout(() => setAlert(null), 6000);
-        return () => clearTimeout(timer);
-    }, [alert])
-
-    const isMailbox = (category === 'inbox' || category === 'sent' || category === 'archive') ? true : false;
-
-    // Load mailbox data when a tab item is clicked
-    React.useEffect(() => {
-
-        if (!isMailbox) return;
-
-        fetch(`/emails/${category}`)
-        .then(response => response.json())
-        .then(metadata => {
-            setEmails(metadata);
-        })
-
-    }, [category])
-
-    React.useEffect(() => {
-        if (category !== 'email') return;
-
-        fetch(`emails/${emailID}`)
-        .then(response => response.json())
-        .then(email => {
-            setEmail(email);
-
-            fetch(`emails/${emailID}`, {
-                method: 'PUT',
-                body: JSON.stringify({
-                    read: true
-                })
-            })
-
-
-        })
-    }, [emailID])
-    
-    if (category === 'email') {
-        return (
-            <div>
-                <MailBody category={category} email={email} loadView={loadView} />
-            </div>
-        )
-    }
-
-    // render Compose Form
-    if (!isMailbox) {
-        return (
-            <div>
-                <ComposeForm onSuccess={loadView} sendAlert={handleAlert} alert={alert} />
-            </div>
-        );
-    }
-
-
-    // Render Emails
-    return (
-        <div>
-            {alert ? <Alert message={alert} /> : null }
-            <h2>{category.charAt(0).toUpperCase() + category.slice(1)}</h2>
-            {
-                emails.length === 0 ?
-                'No emails in this mailbox.' :
-                emails.map(metadata => <MailListItem metadata={metadata} onSelect={loadView} />)
-            }
-        </div>
-    )
-}
-
-function MailListItem({metadata, onSelect}) {
-    const isRead = metadata.read ? 'list-group-item-secondary' : '';
-
-    return (
-        <div>
-            <a
-                href={`emails/${metadata.id}`}
-                className={`list-group-item list-group-item-action mb-1 ${isRead}`}
-                onClick={(event) => {onSelect('email', event, metadata.id)}}
-            >
-                <div className="d-flex w-100 justify-content-between">
-                    <h5 className="mb-1">{metadata.subject}</h5>
-                    <small className="text-body-secondary">{metadata.timestamp}</small>
-                </div>
-                <p className="mb-1">{metadata.sender}</p>
-            </a>
-        </div>
-    )
-}
-
-function MailBody({category, email, loadView}) {
-
-    function archive(email) {
-        console.log(email)
-        const archive_switch = email.archived ? false : true;
-
-        fetch(`/emails/${email.id}`, {
-            method: 'PUT',
-            body: JSON.stringify({
-                archived: archive_switch
-            })
-        })
-        .then(() => {loadView("archive")})
-    }
-
-    return (
-            <div>
-                <TabItem name="Reply" />
-                {category !== 'sent' ? 
-                    <TabItem name="Archive" onClick={() => {archive(email)}} /> : null}
-                <ul className="list-unstyled">
-                    <li><strong>From:</strong> {email.sender}</li>
-                    <li><strong>To:</strong> {email.recipients}</li>
-                    <li><strong>Subject:</strong> {email.subject}</li>
-                    <li><strong>Date:</strong> {email.timestamp}</li>
-                </ul>
-
-                <div>
-                    {email.body}
-                </div>
-            </div>
-        )
-}
-
-function ComposeForm({onSuccess, sendAlert, alert}) {
-
-    const [mailFields, setMailFields] = React.useState({
-        recipients: '',
-        subject: '',
-        body: ''
-    });
-
-    function updateField(event) {
-
-        const { name, value } = event.target;
-
-        setMailFields(prev => ({
-            ...prev,
-            [name]: value
-        }))
-    }
-
-    function sendMail(event, fields) {
-        event.preventDefault();
-        fetch('/emails', {
-            method: 'POST',
-            body: JSON.stringify({
-                recipients: fields.recipients,
-                subject: fields.subject,
-                body: fields.body
-            })
-        })
-        .then(response => response.json())
-        .then(result => {
-            if ('error' in result) {
-                sendAlert(result.error)
-            } else {
-                sendAlert(result.message);
-                onSuccess(event, "sent");
-            }
-        })
-    }
-
-    return (
-        <div>
-            <h2>
-                New Mail
-            </h2>
-            {
-                alert ? <Alert message={alert} /> : null
-            }
-            <form>
-                <div className="form-group">
-                    From: <input disabled className="form-control" value="Sender (you)" onChange={updateField} />
-                </div>
-                <div className="form-group">
-                    To: <input className="form-control" name="recipients" value={mailFields.recipients} onChange={updateField} />
-                </div>
-                <div className="form-group">
-                    <input className="form-control" name="subject" placeholder="Subject" value={mailFields.subject} onChange={updateField} />
-                </div>
-                <textarea class="form-control mb-1" name="body" placeholder="Body" value={mailFields.body} onChange={updateField}></textarea>
-
-                <input type="submit" class="btn btn-primary" onClick={(event) => sendMail(event, mailFields)} />
-            </form>
-        </div>
-    )
-}
-
-
-function Alert({message}) {
-    return (
-        <div className="alert alert-primary">
-            {message}
-        </div>
-    );
-}
-
-ReactDOM.render(<App />, document.querySelector("#app"));
