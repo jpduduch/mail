@@ -7,11 +7,17 @@ function App() {
     ]
 
     const [activeView, setActiveView] = React.useState("inbox");
+    const [emailID, setEmailID] = React.useState(null);
 
-    function handleActiveView(event, name) {
+    function handleActiveView(name, event = null, emailID = null) {
         if (event) {
             event.preventDefault();
         }
+
+        if (emailID) {
+            setEmailID(emailID);
+        }
+
         setActiveView(name.toLowerCase())
     }
 
@@ -20,12 +26,12 @@ function App() {
             <nav>
                 {
                     views.map(view => {
-                        return <TabItem key={view} name={view} onSelect={(event) => handleActiveView(event, view)}  />
+                        return <TabItem key={view} name={view} onSelect={(event) => handleActiveView(view, event)}  />
                     })
                 }
             </nav>
             <hr />
-            <MainView category={activeView} loadView={handleActiveView}  />
+            <MainView category={activeView} loadView={handleActiveView} emailID={emailID}  />
         </div>
     )
 }
@@ -39,11 +45,11 @@ function TabItem({name, onSelect}) {
     )
 }
 
-function MainView({category, loadView}) {
+function MainView({category, loadView, emailID}) {
 
     const [emails, setEmails] = React.useState([]);
     const [alert, setAlert] = React.useState(null);
-    const [email, setEmail] = React.useState();
+    const [email, setEmail] = React.useState({});
 
     function handleAlert(alert) {
         setAlert(alert);
@@ -62,26 +68,39 @@ function MainView({category, loadView}) {
     // Load mailbox data when a tab item is clicked
     React.useEffect(() => {
 
-        if (!isMailbox) { return }
+        if (!isMailbox) return;
 
         fetch(`/emails/${category}`)
         .then(response => response.json())
         .then(metadata => {
             setEmails(metadata);
-            console.log(category)
-            console.log(emails);
         })
+
     }, [category])
 
-    // load email
-    function loadMail(email) {
-    }
+    React.useEffect(() => {
+        if (category !== 'email') return;
 
-    // render email
+        fetch(`emails/${emailID}`)
+        .then(response => response.json())
+        .then(email => {
+            setEmail(email);
+
+            fetch(`emails/${emailID}`, {
+                method: 'PUT',
+                body: JSON.stringify({
+                    read: true
+                })
+            })
+
+
+        })
+    }, [emailID])
+    
     if (category === 'email') {
         return (
             <div>
-                todo
+                <MailBody category={category} email={email} loadView={loadView} />
             </div>
         )
     }
@@ -95,6 +114,7 @@ function MainView({category, loadView}) {
         );
     }
 
+
     // Render Emails
     return (
         <div>
@@ -103,7 +123,7 @@ function MainView({category, loadView}) {
             {
                 emails.length === 0 ?
                 'No emails in this mailbox.' :
-                emails.map(metadata => <MailListItem metadata={metadata} onSelect={() => } />)
+                emails.map(metadata => <MailListItem metadata={metadata} onSelect={loadView} />)
             }
         </div>
     )
@@ -117,7 +137,7 @@ function MailListItem({metadata, onSelect}) {
             <a
                 href={`emails/${metadata.id}`}
                 className={`list-group-item list-group-item-action mb-1 ${isRead}`}
-                onClick={(event) => {onSelect(event, 'email')}}
+                onClick={(event) => {onSelect('email', event, metadata.id)}}
             >
                 <div className="d-flex w-100 justify-content-between">
                     <h5 className="mb-1">{metadata.subject}</h5>
@@ -127,6 +147,40 @@ function MailListItem({metadata, onSelect}) {
             </a>
         </div>
     )
+}
+
+function MailBody({category, email, loadView}) {
+
+    function archive(email) {
+        console.log(email)
+        const archive_switch = email.archived ? false : true;
+
+        fetch(`/emails/${email.id}`, {
+            method: 'PUT',
+            body: JSON.stringify({
+                archived: archive_switch
+            })
+        })
+        .then(() => {loadView("archive")})
+    }
+
+    return (
+            <div>
+                <TabItem name="Reply" />
+                {category !== 'sent' ? 
+                    <TabItem name="Archive" onClick={() => {archive(email)}} /> : null}
+                <ul className="list-unstyled">
+                    <li><strong>From:</strong> {email.sender}</li>
+                    <li><strong>To:</strong> {email.recipients}</li>
+                    <li><strong>Subject:</strong> {email.subject}</li>
+                    <li><strong>Date:</strong> {email.timestamp}</li>
+                </ul>
+
+                <div>
+                    {email.body}
+                </div>
+            </div>
+        )
 }
 
 function ComposeForm({onSuccess, sendAlert, alert}) {
@@ -163,7 +217,7 @@ function ComposeForm({onSuccess, sendAlert, alert}) {
                 sendAlert(result.error)
             } else {
                 sendAlert(result.message);
-                onSuccess("sent");
+                onSuccess(event, "sent");
             }
         })
     }
